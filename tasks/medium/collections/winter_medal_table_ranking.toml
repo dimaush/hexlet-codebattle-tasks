@@ -1,0 +1,197 @@
+level             = "medium"
+name              = "winter_medal_table_ranking"
+tags              = ["collections", "winter_olympics"]
+time_to_solve_sec = 420
+
+description_en = """
+You are given parallel arrays:
+- `countries`
+- `gold`
+- `silver`
+- `bronze`
+
+Rank countries by Winter Olympic table rules:
+1. more gold
+2. then more silver
+3. then more bronze
+4. then country name alphabetically
+
+Return ranked country names.
+If lengths differ, use common prefix length.
+"""
+
+description_ru = """
+Даны параллельные массивы:
+- `countries`
+- `gold`
+- `silver`
+- `bronze`
+
+Отсортируйте страны по правилам зимнего олимпийского зачета:
+1. больше золотых
+2. затем больше серебряных
+3. затем больше бронзовых
+4. затем название страны по алфавиту
+
+Верните отсортированные названия стран.
+Если длины массивов различаются, используйте общую префиксную длину.
+"""
+
+solution = """
+def solution(countries: list[str], gold: list[int], silver: list[int], bronze: list[int]) -> list[str]:
+    n = min(len(countries), len(gold), len(silver), len(bronze))
+    rows = []
+    for i in range(n):
+        rows.append((gold[i], silver[i], bronze[i], countries[i]))
+    if not rows:
+        return []
+    rows.sort(key=lambda x: (-x[0], -x[1], -x[2], x[3]))
+    out = []
+    for _, _, _, c in rows:
+        out.append(c)
+    return out
+"""
+
+examples = """
+solution([], [], [], []) == []
+solution(["A", "B"], [1, 2], [0, 0], [0, 0]) == ["B", "A"]
+solution(["NOR", "SWE", "FIN"], [2, 2, 1], [1, 3, 4], [0, 1, 5]) == ["SWE", "NOR", "FIN"]
+"""
+
+[[input_signature]]
+argument_name = "countries"
+[input_signature.type]
+name = "array"
+[input_signature.type.nested]
+name = "string"
+
+[[input_signature]]
+argument_name = "gold"
+[input_signature.type]
+name = "array"
+[input_signature.type.nested]
+name = "integer"
+
+[[input_signature]]
+argument_name = "silver"
+[input_signature.type]
+name = "array"
+[input_signature.type.nested]
+name = "integer"
+
+[[input_signature]]
+argument_name = "bronze"
+[input_signature.type]
+name = "array"
+[input_signature.type.nested]
+name = "integer"
+
+[output_signature.type]
+name = "array"
+[output_signature.type.nested]
+name = "string"
+
+[[asserts]]
+arguments = [[], [], [], []]
+expected  = []
+
+[[asserts]]
+arguments = [["A", "B"], [1, 2], [0, 0], [0, 0]]
+expected  = ["B", "A"]
+
+[[asserts]]
+arguments = [["NOR", "SWE", "FIN"], [2, 2, 1], [1, 3, 4], [0, 1, 5]]
+expected  = ["SWE", "NOR", "FIN"]
+
+[[asserts]]
+arguments = [["X", "Y", "Z"], [0, 0, 0], [1, 1, 1], [2, 2, 2]]
+expected  = ["X", "Y", "Z"]
+
+[[asserts]]
+arguments = [["ITA", "ESP", "GER"], [3, 3, 2], [1, 2, 5], [0, 0, 0]]
+expected  = ["ESP", "ITA", "GER"]
+
+[[asserts]]
+arguments = [["N1"], [5], [4], [3]]
+expected  = ["N1"]
+
+[[asserts]]
+arguments = [["A", "B", "C"], [1, 1, 1], [2, 2, 2], [3, 4, 3]]
+expected  = ["B", "A", "C"]
+
+[[asserts]]
+arguments = [["Q", "W"], [0, 1], [5, 0], [5, 0]]
+expected  = ["W", "Q"]
+
+[[asserts]]
+arguments = [["AA", "AB", "AC"], [2, 2, 2], [0, 0, 0], [1, 1, 1]]
+expected  = ["AA", "AB", "AC"]
+
+[[asserts]]
+arguments = [["U", "V", "W"], [4, 3, 2], [1, 9, 9], [1, 9, 9]]
+expected  = ["U", "V", "W"]
+
+[[asserts]]
+arguments = [["A", "B", "C", "D"], [1, 1, 1, 1], [0, 0, 0, 0], [0, 1, 2, 3]]
+expected  = ["D", "C", "B", "A"]
+
+[[asserts]]
+arguments = [["KOR", "CHN", "JPN"], [4, 4, 4], [2, 1, 2], [1, 5, 0]]
+expected  = ["KOR", "JPN", "CHN"]
+
+[[asserts]]
+arguments = [["AAA", "AA"], [0, 0], [0, 0], [0, 0]]
+expected  = ["AA", "AAA"]
+
+[[asserts]]
+arguments = [["X", "Y", "Z"], [9, 8, 7], [0, 10, 10], [0, 10, 10]]
+expected  = ["X", "Y", "Z"]
+
+[[asserts]]
+arguments = [["N1", "N2", "N3"], [2, 2, 2], [2, 2, 1], [2, 1, 9]]
+expected  = ["N1", "N2", "N3"]
+
+[[asserts]]
+arguments = [["A", "B"], [1], [2], [3]]
+expected  = ["A"]
+
+[[asserts]]
+arguments = [
+  [
+    "SUI",
+    "AUT",
+    "USA",
+    "CAN",
+  ],
+  [
+    3,
+    3,
+    3,
+    2,
+  ],
+  [
+    1,
+    1,
+    2,
+    9,
+  ],
+  [
+    1,
+    2,
+    0,
+    9,
+  ],
+]
+expected = ["USA", "AUT", "SUI", "CAN"]
+
+[[asserts]]
+arguments = [["M", "N", "O"], [5, 5, 6], [0, 9, 0], [0, 0, 0]]
+expected  = ["O", "N", "M"]
+
+[[asserts]]
+arguments = [["E1", "E2", "E3", "E4"], [0, 1, 0, 1], [5, 0, 6, 0], [0, 0, 0, 1]]
+expected  = ["E4", "E2", "E3", "E1"]
+
+[[asserts]]
+arguments = [["Q1", "Q2", "Q3"], [2, 2, 2], [3, 3, 3], [4, 4, 4]]
+expected  = ["Q1", "Q2", "Q3"]

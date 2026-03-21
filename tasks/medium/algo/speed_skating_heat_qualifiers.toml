@@ -1,0 +1,156 @@
+level             = "medium"
+name              = "speed_skating_heat_qualifiers"
+tags              = ["algo", "winter_olympics"]
+time_to_solve_sec = 520
+
+description_en = """
+You are given `heats`, where each row contains times for one speed skating heat.
+Smaller time is better.
+
+Qualification rules:
+1. In each heat, top `k` athletes qualify directly.
+2. From all remaining athletes, take next `m` fastest overall.
+3. Tie-break: smaller heat index, then smaller athlete index.
+
+Return all qualifiers as pairs `[heat_index, athlete_index]`, sorted ascending.
+"""
+
+description_ru = """
+Дан массив `heats`, где каждая строка содержит времена одного забега в коньках.
+Меньшее время лучше.
+
+Правила отбора:
+1. В каждом забеге `k` лучших проходят напрямую.
+2. Из остальных добираются еще `m` лучших по времени.
+3. При равенстве: меньший индекс забега, затем меньший индекс спортсмена.
+
+Верните всех квалифицировавшихся как пары `[heat_index, athlete_index]`, отсортированные по возрастанию.
+"""
+
+solution = """
+def solution(heats: list[list[int]], k: int, m: int) -> list[list[int]]:
+    q, rest = [], []
+    for hi, heat in enumerate(heats):
+        order = sorted(range(len(heat)), key=lambda ai: (heat[ai], ai))
+        for ai in order[:k]:
+            q.append([hi, ai])
+        for ai in order[k:]:
+            rest.append((heat[ai], hi, ai))
+    rest.sort(key=lambda x: (x[0], x[1], x[2]))
+    for _, hi, ai in rest[:m]:
+        q.append([hi, ai])
+    q.sort()
+    return q
+"""
+
+examples = """
+solution([], 2, 1) == []
+solution([[10, 11, 12]], 1, 1) == [[0, 0], [0, 1]]
+solution([[10, 9, 11], [8, 12, 7]], 1, 2) == [[0, 0], [0, 1], [1, 0], [1, 2]]
+"""
+
+[[input_signature]]
+argument_name = "heats"
+[input_signature.type]
+name = "array"
+[input_signature.type.nested]
+name = "array"
+[input_signature.type.nested.nested]
+name = "integer"
+
+[[input_signature]]
+argument_name = "k"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "m"
+[input_signature.type]
+name = "integer"
+
+[output_signature.type]
+name = "array"
+[output_signature.type.nested]
+name = "array"
+[output_signature.type.nested.nested]
+name = "integer"
+
+[[asserts]]
+arguments = [[], 2, 1]
+expected  = []
+
+[[asserts]]
+arguments = [[[10, 11, 12]], 1, 1]
+expected  = [[0, 0], [0, 1]]
+
+[[asserts]]
+arguments = [[[10, 9, 11], [8, 12, 7]], 1, 2]
+expected  = [[0, 0], [0, 1], [1, 0], [1, 2]]
+
+[[asserts]]
+arguments = [[[15, 14], [13, 12]], 1, 1]
+expected  = [[0, 1], [1, 0], [1, 1]]
+
+[[asserts]]
+arguments = [[[20, 10, 30], [25, 15, 5]], 2, 0]
+expected  = [[0, 0], [0, 1], [1, 1], [1, 2]]
+
+[[asserts]]
+arguments = [[[9, 9, 10], [8, 11, 8]], 1, 2]
+expected  = [[0, 0], [0, 1], [1, 0], [1, 2]]
+
+[[asserts]]
+arguments = [[[100], [90], [80]], 1, 2]
+expected  = [[0, 0], [1, 0], [2, 0]]
+
+[[asserts]]
+arguments = [[[7, 6, 5, 4]], 2, 1]
+expected  = [[0, 1], [0, 2], [0, 3]]
+
+[[asserts]]
+arguments = [[[30, 20], [10, 40], [25, 15]], 1, 2]
+expected  = [[0, 0], [0, 1], [1, 0], [2, 0], [2, 1]]
+
+[[asserts]]
+arguments = [[[12, 13, 14], [11, 15, 16]], 2, 2]
+expected  = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2]]
+
+[[asserts]]
+arguments = [[[5, 4, 3], [2, 1, 6]], 2, 1]
+expected  = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1]]
+
+[[asserts]]
+arguments = [[[10, 10], [10, 10]], 1, 2]
+expected  = [[0, 0], [0, 1], [1, 0], [1, 1]]
+
+[[asserts]]
+arguments = [[[50, 40, 30, 20], [35, 25, 15, 5]], 1, 3]
+expected  = [[0, 2], [0, 3], [1, 1], [1, 2], [1, 3]]
+
+[[asserts]]
+arguments = [[[1, 2, 3]], 0, 2]
+expected  = [[0, 0], [0, 1]]
+
+[[asserts]]
+arguments = [[[9, 7], [8, 6], [5, 4]], 1, 0]
+expected  = [[0, 1], [1, 1], [2, 1]]
+
+[[asserts]]
+arguments = [[[100, 90, 80], [70, 60, 50]], 3, 5]
+expected  = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2]]
+
+[[asserts]]
+arguments = [[[11, 12], [13, 14]], 2, 1]
+expected  = [[0, 0], [0, 1], [1, 0], [1, 1]]
+
+[[asserts]]
+arguments = [[[3, 1, 2], [6, 4, 5]], 1, 4]
+expected  = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2]]
+
+[[asserts]]
+arguments = [[[8], [7], [6], [5]], 0, 3]
+expected  = [[1, 0], [2, 0], [3, 0]]
+
+[[asserts]]
+arguments = [[[20, 10, 30], [15, 25, 5], [18, 12, 22]], 2, 2]
+expected  = [[0, 0], [0, 1], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]

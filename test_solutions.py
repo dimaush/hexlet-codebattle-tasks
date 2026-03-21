@@ -224,26 +224,9 @@ class TestRunner:
         except Exception as e:
             raise ValueError(f"Failed to create solution function: {str(e)}")
 
-    def normalize_output(self, value: Any) -> Any:
-        """Normalize output to handle case-sensitivity in dictionaries"""
-        if isinstance(value, dict):
-            return {k.lower(): self.normalize_output(v) for k, v in value.items()}
-        elif isinstance(value, list):
-            return [self.normalize_output(x) for x in value]
-        elif isinstance(value, str):
-            return value.lower()
-        return value
-
     def values_equal(self, actual: Any, expected: Any) -> bool:
-        """Compare values with normalization for case-insensitive comparison"""
-        if actual == expected:
-            return True
-
-        if isinstance(actual, str) and isinstance(expected, str):
-            if actual.isdigit() and expected.isdigit():
-                return actual == expected
-
-        return self.normalize_output(actual) == self.normalize_output(expected)
+        """Compare values using exact equality."""
+        return actual == expected
 
     def find_difference(self, actual: Any, expected: Any, path: str = "") -> List[str]:
         """Find and return detailed differences between actual and expected values"""

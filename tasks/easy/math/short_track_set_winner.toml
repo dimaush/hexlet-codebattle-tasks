@@ -1,0 +1,128 @@
+level             = "easy"
+name              = "short_track_set_winner"
+tags              = ["math", "winter_olympics"]
+time_to_solve_sec = 235
+
+description_en = """
+Given race points `a` and `b` in a short-track duel, return:
+- `"A"` if A already won
+- `"B"` if B already won
+- `"InProgress"` otherwise
+
+A side wins at `15` points with at least `2` points lead.
+"""
+
+description_ru = """
+Даны очки `a` и `b` в дуэли шорт-трека. Верните:
+- `"A"`, если A уже выиграл
+- `"B"`, если B уже выиграл
+- `"InProgress"` иначе
+
+Победа фиксируется от `15` очков при разнице минимум `2`.
+"""
+
+solution = """
+def solution(a: int, b: int) -> str:
+    if max(a, b) < 15 or abs(a - b) < 2:
+        return "InProgress"
+    return "A" if a > b else "B"
+"""
+
+examples = """
+solution(15, 13) == "A"
+solution(14, 14) == "InProgress"
+solution(18, 20) == "B"
+"""
+
+[[input_signature]]
+argument_name = "a"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "b"
+[input_signature.type]
+name = "integer"
+
+[output_signature.type]
+name = "string"
+
+[[asserts]]
+arguments = [0, 0]
+expected  = "InProgress"
+
+[[asserts]]
+arguments = [14, 12]
+expected  = "InProgress"
+
+[[asserts]]
+arguments = [15, 13]
+expected  = "A"
+
+[[asserts]]
+arguments = [13, 15]
+expected  = "B"
+
+[[asserts]]
+arguments = [15, 14]
+expected  = "InProgress"
+
+[[asserts]]
+arguments = [16, 14]
+expected  = "A"
+
+[[asserts]]
+arguments = [14, 16]
+expected  = "B"
+
+[[asserts]]
+arguments = [20, 19]
+expected  = "InProgress"
+
+[[asserts]]
+arguments = [21, 19]
+expected  = "A"
+
+[[asserts]]
+arguments = [19, 21]
+expected  = "B"
+
+[[asserts]]
+arguments = [15, 0]
+expected  = "A"
+
+[[asserts]]
+arguments = [0, 15]
+expected  = "B"
+
+[[asserts]]
+arguments = [16, 15]
+expected  = "InProgress"
+
+[[asserts]]
+arguments = [17, 15]
+expected  = "A"
+
+[[asserts]]
+arguments = [15, 17]
+expected  = "B"
+
+[[asserts]]
+arguments = [14, 13]
+expected  = "InProgress"
+
+[[asserts]]
+arguments = [30, 28]
+expected  = "A"
+
+[[asserts]]
+arguments = [28, 30]
+expected  = "B"
+
+[[asserts]]
+arguments = [22, 21]
+expected  = "InProgress"
+
+[[asserts]]
+arguments = [22, 20]
+expected  = "A"

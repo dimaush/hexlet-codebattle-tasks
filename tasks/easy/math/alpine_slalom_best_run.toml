@@ -1,0 +1,119 @@
+level             = "easy"
+name              = "alpine_slalom_best_run"
+tags              = ["math", "winter_olympics"]
+time_to_solve_sec = 230
+
+description_en = """
+Given run times `times_sec` for one alpine slalom athlete, return the best run time.
+Non-positive values (`<= 0`) mean invalid run (`DNF`) and must be ignored.
+If there are no valid runs, return `0`.
+"""
+
+description_ru = """
+Дан массив времен `times_sec` одного спортсмена в слаломе.
+Верните лучшее время.
+Неположительные значения (`<= 0`) означают невалидный заезд (`DNF`) и должны игнорироваться.
+Если валидных заездов нет, верните `0`.
+"""
+
+solution = """
+def solution(times_sec: list[int]) -> int:
+    t = [x for x in times_sec if x > 0]
+    return min(t) if t else 0
+"""
+
+examples = """
+solution([]) == 0
+solution([61]) == 61
+solution([0, 64, 62, 63]) == 62
+"""
+
+[[input_signature]]
+argument_name = "times_sec"
+[input_signature.type]
+name = "array"
+[input_signature.type.nested]
+name = "integer"
+
+[output_signature.type]
+name = "integer"
+
+[[asserts]]
+arguments = [[]]
+expected  = 0
+
+[[asserts]]
+arguments = [[61]]
+expected  = 61
+
+[[asserts]]
+arguments = [[64, 62, 63]]
+expected  = 62
+
+[[asserts]]
+arguments = [[70, 70, 70]]
+expected  = 70
+
+[[asserts]]
+arguments = [[55, 54, 53, 56]]
+expected  = 53
+
+[[asserts]]
+arguments = [[100, 90]]
+expected  = 90
+
+[[asserts]]
+arguments = [[89, 88, 90, 91]]
+expected  = 88
+
+[[asserts]]
+arguments = [[120, 119, 121]]
+expected  = 119
+
+[[asserts]]
+arguments = [[45, 46, 47, 48, 44]]
+expected  = 44
+
+[[asserts]]
+arguments = [[300, 250, 275]]
+expected  = 250
+
+[[asserts]]
+arguments = [[1, 2, 3, 4, 5]]
+expected  = 1
+
+[[asserts]]
+arguments = [[5, 4, 3, 2, 1]]
+expected  = 1
+
+[[asserts]]
+arguments = [[42, 42, 41, 42]]
+expected  = 41
+
+[[asserts]]
+arguments = [[999, 1000, 998]]
+expected  = 998
+
+[[asserts]]
+arguments = [[600, 601, 602, 599]]
+expected  = 599
+
+[[asserts]]
+arguments = [[77, 88, 0]]
+expected  = 77
+
+[[asserts]]
+arguments = [[88, 77, -3]]
+expected  = 77
+
+[[asserts]]
+arguments = [[31, 31, 0, 30, 31]]
+expected  = 30
+
+[[asserts]]
+arguments = [[200, 150, 180, 170, 160, -1]]
+expected  = 150
+
+[[asserts]]
+arguments = [[0, -2, 0, -5]]
+expected  = 0

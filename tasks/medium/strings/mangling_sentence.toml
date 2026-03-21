@@ -118,7 +118,7 @@ expected  = "Cdeo is Fnu"
 [[asserts]]
 arguments = ["aB cD"]
 comment   = "Mixed case small words"
-expected  = "Ab Cd"
+expected  = "aB cD"
 
 [[asserts]]
 arguments = ["Python"]
@@ -133,7 +133,7 @@ expected  = "AbC"
 [[asserts]]
 arguments = ["aBc"]
 comment   = "Alternating case variant"
-expected  = "Abc"
+expected  = "aBc"
 
 [[asserts]]
 arguments = ["Software Engineering"]
@@ -178,7 +178,7 @@ expected  = "Ehllo, Dlorw!"
 [[asserts]]
 arguments = ["zZ"]
 comment   = "Two letter same"
-expected  = "Zz"
+expected  = "zZ"
 
 [[asserts]]
 arguments = ["ba"]

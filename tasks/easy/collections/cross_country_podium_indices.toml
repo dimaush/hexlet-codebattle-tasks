@@ -1,0 +1,130 @@
+level             = "easy"
+name              = "cross_country_podium_indices"
+tags              = ["collections", "winter_olympics"]
+time_to_solve_sec = 250
+
+description_en = """
+Array `times_sec` stores finish times of skiers by start index.
+Return indices of top three athletes.
+
+Sort by:
+1. smaller time
+2. smaller index for ties
+
+If fewer than three athletes exist, return all ranked indices.
+"""
+
+description_ru = """
+Массив `times_sec` хранит финишные времена лыжников по стартовому индексу.
+Верните индексы трех лучших.
+
+Сортировка:
+1. меньшее время
+2. меньший индекс при равенстве
+
+Если участников меньше трех, верните все индексы по рангу.
+"""
+
+solution = """
+def solution(times_sec: list[int]) -> list[int]:
+    order = sorted(range(len(times_sec)), key=lambda i: (times_sec[i], i))
+    return order[:3]
+"""
+
+examples = """
+solution([40]) == [0]
+solution([90, 80, 70]) == [2, 1, 0]
+solution([120, 115, 115, 130]) == [1, 2, 0]
+"""
+
+[[input_signature]]
+argument_name = "times_sec"
+[input_signature.type]
+name = "array"
+[input_signature.type.nested]
+name = "integer"
+
+[output_signature.type]
+name = "array"
+[output_signature.type.nested]
+name = "integer"
+
+[[asserts]]
+arguments = [[40]]
+expected  = [0]
+
+[[asserts]]
+arguments = [[90, 80, 70]]
+expected  = [2, 1, 0]
+
+[[asserts]]
+arguments = [[120, 115, 115, 130]]
+expected  = [1, 2, 0]
+
+[[asserts]]
+arguments = [[300, 200]]
+expected  = [1, 0]
+
+[[asserts]]
+arguments = [[50, 50, 50, 50]]
+expected  = [0, 1, 2]
+
+[[asserts]]
+arguments = [[10, 9, 8, 7, 6]]
+expected  = [4, 3, 2]
+
+[[asserts]]
+arguments = [[95, 100, 95, 90]]
+expected  = [3, 0, 2]
+
+[[asserts]]
+arguments = [[500, 100, 300, 200, 400]]
+expected  = [1, 3, 2]
+
+[[asserts]]
+arguments = [[111, 109, 110]]
+expected  = [1, 2, 0]
+
+[[asserts]]
+arguments = [[75, 72, 72, 74, 71]]
+expected  = [4, 1, 2]
+
+[[asserts]]
+arguments = [[1, 2, 3]]
+expected  = [0, 1, 2]
+
+[[asserts]]
+arguments = [[3, 2, 1]]
+expected  = [2, 1, 0]
+
+[[asserts]]
+arguments = [[5, 5, 4, 4, 3, 3]]
+expected  = [4, 5, 2]
+
+[[asserts]]
+arguments = [[1000, 999, 998, 997]]
+expected  = [3, 2, 1]
+
+[[asserts]]
+arguments = [[42, 41]]
+expected  = [1, 0]
+
+[[asserts]]
+arguments = [[7, 7, 7]]
+expected  = [0, 1, 2]
+
+[[asserts]]
+arguments = [[9, 8, 9, 8, 7]]
+expected  = [4, 1, 3]
+
+[[asserts]]
+arguments = [[11, 13, 12, 14, 10]]
+expected  = [4, 0, 2]
+
+[[asserts]]
+arguments = [[80, 60, 70, 50, 90]]
+expected  = [3, 1, 2]
+
+[[asserts]]
+arguments = [[6, 5, 4, 3, 2, 1]]
+expected  = [5, 4, 3]

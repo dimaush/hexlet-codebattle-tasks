@@ -1,0 +1,121 @@
+level             = "elementary"
+name              = "ski_laps_count"
+tags              = ["math", "winter_olympics"]
+time_to_solve_sec = 150
+
+description_en = """
+A skier covered `distance_m` meters on a loop with length `lap_m`.
+For every `5` full laps, one bonus lap is added to the score.
+Return total lap score.
+"""
+
+description_ru = """
+Лыжник прошел `distance_m` метров по кругу длиной `lap_m`.
+За каждые `5` полных кругов добавляется один бонусный круг в зачет.
+Верните итоговый зачет кругов.
+"""
+
+solution = """
+def solution(distance_m: int, lap_m: int) -> int:
+    x = distance_m // lap_m
+    return x + x // 5
+"""
+
+examples = """
+solution(0, 5) == 0
+solution(15, 5) == 3
+solution(250, 25) == 12
+"""
+
+[[input_signature]]
+argument_name = "distance_m"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "lap_m"
+[input_signature.type]
+name = "integer"
+
+[output_signature.type]
+name = "integer"
+
+[[asserts]]
+arguments = [0, 5]
+expected  = 0
+
+[[asserts]]
+arguments = [4, 5]
+expected  = 0
+
+[[asserts]]
+arguments = [5, 5]
+expected  = 1
+
+[[asserts]]
+arguments = [9, 5]
+expected  = 1
+
+[[asserts]]
+arguments = [10, 5]
+expected  = 2
+
+[[asserts]]
+arguments = [15, 5]
+expected  = 3
+
+[[asserts]]
+arguments = [17, 5]
+expected  = 3
+
+[[asserts]]
+arguments = [100, 12]
+expected  = 9
+
+[[asserts]]
+arguments = [121, 12]
+expected  = 12
+
+[[asserts]]
+arguments = [999, 100]
+expected  = 10
+
+[[asserts]]
+arguments = [1, 1]
+expected  = 1
+
+[[asserts]]
+arguments = [250, 25]
+expected  = 12
+
+[[asserts]]
+arguments = [251, 25]
+expected  = 12
+
+[[asserts]]
+arguments = [24, 6]
+expected  = 4
+
+[[asserts]]
+arguments = [23, 6]
+expected  = 3
+
+[[asserts]]
+arguments = [1, 2]
+expected  = 0
+
+[[asserts]]
+arguments = [5000, 333]
+expected  = 18
+
+[[asserts]]
+arguments = [333, 333]
+expected  = 1
+
+[[asserts]]
+arguments = [334, 333]
+expected  = 1
+
+[[asserts]]
+arguments = [665, 333]
+expected  = 1

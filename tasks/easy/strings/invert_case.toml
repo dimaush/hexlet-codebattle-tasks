@@ -163,12 +163,12 @@ expected  = "IpHONE15pRO"
 [[asserts]]
 arguments = ["WiFi-5GHz"]
 comment   = "Hyphenated tech term"
-expected  = "wIfI-5ghz"
+expected  = "wIfI-5ghZ"
 
 [[asserts]]
 arguments = ["IOError"]
 comment   = "All caps error name"
-expected  = "ioerror"
+expected  = "ioeRROR"
 
 [[asserts]]
 arguments = ["firstName"]
