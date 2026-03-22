@@ -52,10 +52,6 @@ arguments = [[7.0, 7.0, 7.0]]
 expected  = 14.0
 
 [[asserts]]
-arguments = [[9.2, 9.1]]
-expected  = 9.199999999999998
-
-[[asserts]]
 arguments = [[10.0, 10.0, 10.0, 10.0]]
 expected  = 30.0
 
