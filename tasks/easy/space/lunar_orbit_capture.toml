@@ -1,0 +1,106 @@
+level             = "easy"
+name              = "lunar_orbit_capture"
+tags              = ["space", "simulation"]
+time_to_solve_sec = 260
+
+description_en = """
+Selene approaches the Moon with an initial speed. Brake burns are applied in order and each burn lowers the speed. Return the first burn count after which the speed enters the safe capture range `[min_speed, max_speed]`, or `-1` if it never does.
+"""
+
+description_ru = """
+Selene приближается к Луне с начальной скоростью. Тормозные импульсы применяются по порядку, и каждый импульс уменьшает скорость. Верните номер первого импульса, после которого скорость попадает в безопасный диапазон захвата `[min_speed, max_speed]`, или `-1`, если этого не происходит.
+"""
+
+limits = """
+- $0 \\leq \\text{speed}, \\text{min\\_speed}, \\text{max\\_speed} \\leq 10^6$
+- $0 \\leq \\text{len}(\\text{burns}) \\leq 100$
+- $0 \\leq \\text{burns}[i] \\leq 10^5$
+"""
+
+solution = """
+def solution(speed: int, burns: list[int], min_speed: int, max_speed: int) -> int:
+    if min_speed <= speed <= max_speed: return 0
+    for i, burn in enumerate(burns, 1):
+        speed -= burn
+        if min_speed <= speed <= max_speed: return i
+    return -1
+"""
+
+examples = """
+solution(95, [1, 1], 90, 100) == 0
+solution(120, [10], 100, 110) == 1
+solution(120, [3, 3, 3], 100, 110) == -1
+"""
+
+[[input_signature]]
+argument_name = "speed"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "burns"
+[input_signature.type]
+name = "array"
+[input_signature.type.nested]
+name = "integer"
+
+[[input_signature]]
+argument_name = "min_speed"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "max_speed"
+[input_signature.type]
+name = "integer"
+
+[output_signature.type]
+name = "integer"
+
+[[asserts]]
+arguments = [100, [], 90, 110]
+expected  = 0
+
+[[asserts]]
+arguments = [120, [10], 100, 110]
+expected  = 1
+
+[[asserts]]
+arguments = [120, [5, 5], 100, 110]
+expected  = 2
+
+[[asserts]]
+arguments = [120, [3, 3, 3], 100, 110]
+expected  = -1
+
+[[asserts]]
+arguments = [150, [20, 15, 10], 105, 115]
+expected  = 2
+
+[[asserts]]
+arguments = [150, [20, 15, 10], 100, 109]
+expected  = 3
+
+[[asserts]]
+arguments = [80, [5], 90, 100]
+expected  = -1
+
+[[asserts]]
+arguments = [95, [1, 1], 90, 100]
+expected  = 0
+
+[[asserts]]
+arguments = [130, [40], 80, 90]
+expected  = 1
+
+[[asserts]]
+arguments = [130, [30], 80, 90]
+expected  = -1
+
+[[asserts]]
+arguments = [200, [50, 30, 20], 100, 120]
+expected  = 2
+
+[[asserts]]
+arguments = [200, [20, 20, 20, 20], 100, 140]
+expected  = 3

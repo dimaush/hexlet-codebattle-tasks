@@ -1,0 +1,96 @@
+level             = "easy"
+name              = "trans_lunar_burn_plan"
+tags              = ["space", "greedy"]
+time_to_solve_sec = 240
+
+description_en = """
+To leave Earth orbit, Selene may use each available engine impulse at most once. Find the minimum number of impulses needed to reach at least the required `delta-v`, or return `-1` if the transfer is impossible.
+"""
+
+description_ru = """
+Чтобы покинуть земную орбиту, Selene может использовать каждый доступный импульс двигателя не более одного раза. Найдите минимальное число импульсов, достаточное для достижения требуемого `delta-v`, или верните `-1`, если перелет невозможен.
+"""
+
+limits = """
+- $0 \\leq \\text{target} \\leq 10^6$
+- $0 \\leq \\text{len}(\\text{impulses}) \\leq 100$
+- $0 \\leq \\text{impulses}[i] \\leq 10^5$
+"""
+
+solution = """
+def solution(impulses: list[int], target: int) -> int:
+    if target <= 0: return 0
+    s = 0
+    for i, x in enumerate(sorted(impulses, reverse=True), 1):
+        if (s := s + x) >= target: return i
+    return -1
+"""
+
+examples = """
+solution([10, 20, 30], 0) == 0
+solution([10, 20, 30], 31) == 2
+solution([10, 20, 30], 61) == -1
+"""
+
+[[input_signature]]
+argument_name = "impulses"
+[input_signature.type]
+name = "array"
+[input_signature.type.nested]
+name = "integer"
+
+[[input_signature]]
+argument_name = "target"
+[input_signature.type]
+name = "integer"
+
+[output_signature.type]
+name = "integer"
+
+[[asserts]]
+arguments = [[10, 20, 30], 0]
+expected  = 0
+
+[[asserts]]
+arguments = [[10, 20, 30], 15]
+expected  = 1
+
+[[asserts]]
+arguments = [[10, 20, 30], 30]
+expected  = 1
+
+[[asserts]]
+arguments = [[10, 20, 30], 31]
+expected  = 2
+
+[[asserts]]
+arguments = [[10, 20, 30], 60]
+expected  = 3
+
+[[asserts]]
+arguments = [[10, 20, 30], 61]
+expected  = -1
+
+[[asserts]]
+arguments = [[5, 5, 5, 5], 10]
+expected  = 2
+
+[[asserts]]
+arguments = [[5, 5, 5, 5], 18]
+expected  = 4
+
+[[asserts]]
+arguments = [[5, 5, 5, 5], 21]
+expected  = -1
+
+[[asserts]]
+arguments = [[50, 10, 40], 60]
+expected  = 2
+
+[[asserts]]
+arguments = [[1, 2, 3, 4, 5], 7]
+expected  = 2
+
+[[asserts]]
+arguments = [[1, 2, 3, 4, 5], 16]
+expected  = -1

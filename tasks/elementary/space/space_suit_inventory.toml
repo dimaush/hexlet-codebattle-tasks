@@ -1,0 +1,93 @@
+level             = "elementary"
+name              = "space_suit_inventory"
+tags              = ["space", "math"]
+time_to_solve_sec = 150
+
+description_en = """
+Before boarding, each astronaut needs `1` suit, `2` battery packs, and `3` oxygen canisters. Return the maximum number of astronauts that can be fully equipped.
+"""
+
+description_ru = """
+Перед посадкой каждому астронавту нужен `1` скафандр, `2` батарейных блока и `3` кислородных баллона. Верните максимальное число астронавтов, которых можно полностью экипировать.
+"""
+
+limits = """
+- $0 \\leq \\text{suits}, \\text{batteries}, \\text{oxygen\\_canisters} \\leq 10^6$
+"""
+
+solution = """
+def solution(suits: int, batteries: int, oxygen_canisters: int) -> int:
+    return min(suits, batteries // 2, oxygen_canisters // 3)
+"""
+
+examples = """
+solution(0, 0, 0) == 0
+solution(1, 2, 3) == 1
+solution(10, 19, 30) == 9
+"""
+
+[[input_signature]]
+argument_name = "suits"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "batteries"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "oxygen_canisters"
+[input_signature.type]
+name = "integer"
+
+[output_signature.type]
+name = "integer"
+
+[[asserts]]
+arguments = [0, 0, 0]
+expected  = 0
+
+[[asserts]]
+arguments = [1, 2, 3]
+expected  = 1
+
+[[asserts]]
+arguments = [10, 0, 30]
+expected  = 0
+
+[[asserts]]
+arguments = [10, 20, 30]
+expected  = 10
+
+[[asserts]]
+arguments = [10, 19, 30]
+expected  = 9
+
+[[asserts]]
+arguments = [5, 20, 6]
+expected  = 2
+
+[[asserts]]
+arguments = [7, 14, 20]
+expected  = 6
+
+[[asserts]]
+arguments = [9, 18, 27]
+expected  = 9
+
+[[asserts]]
+arguments = [3, 10, 10]
+expected  = 3
+
+[[asserts]]
+arguments = [8, 15, 24]
+expected  = 7
+
+[[asserts]]
+arguments = [100, 150, 500]
+expected  = 75
+
+[[asserts]]
+arguments = [4, 100, 5]
+expected  = 1

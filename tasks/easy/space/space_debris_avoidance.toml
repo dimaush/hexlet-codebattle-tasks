@@ -1,0 +1,109 @@
+level             = "easy"
+name              = "space_debris_avoidance"
+tags              = ["space", "intervals"]
+time_to_solve_sec = 260
+
+description_en = """
+Selene must perform one correction burn lasting `duration` consecutive seconds. Hazard intervals `[l, r]` mark times with dangerous debris, inclusive. Find the earliest safe start time inside `[window_start, window_end]`, or return `-1`.
+"""
+
+description_ru = """
+Selene должна выполнить один корректирующий маневр длительностью `duration` последовательных секунд. Интервалы опасности `[l, r]` задают моменты с космическим мусором и включают границы. Найдите самый ранний безопасный момент старта внутри `[window_start, window_end]` или верните `-1`.
+"""
+
+limits = """
+- $0 \\leq \\text{window\\_start} \\leq \\text{window\\_end} \\leq 10^6$
+- $1 \\leq \\text{duration} \\leq 10^5$
+- $0 \\leq \\text{len}(\\text{hazards}) \\leq 100$
+- $0 \\leq l \\leq r \\leq 10^6$
+"""
+
+solution = """
+def solution(hazards: list[list[int]], window_start: int, window_end: int, duration: int) -> int:
+    t = window_start
+    for l, r in sorted(hazards):
+        if r >= t and t + duration - 1 >= l: t = r + 1
+        elif r >= t: return t if t + duration - 1 <= window_end else -1
+    return t if t + duration - 1 <= window_end else -1
+"""
+
+examples = """
+solution([], 0, 10, 3) == 0
+solution([[0, 9]], 0, 10, 2) == -1
+solution([[1, 2], [5, 6]], 0, 10, 2) == 3
+"""
+
+[[input_signature]]
+argument_name = "hazards"
+[input_signature.type]
+name = "array"
+[input_signature.type.nested]
+name = "array"
+[input_signature.type.nested.nested]
+name = "integer"
+
+[[input_signature]]
+argument_name = "window_start"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "window_end"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "duration"
+[input_signature.type]
+name = "integer"
+
+[output_signature.type]
+name = "integer"
+
+[[asserts]]
+arguments = [[], 0, 10, 3]
+expected  = 0
+
+[[asserts]]
+arguments = [[[2, 4]], 0, 10, 2]
+expected  = 0
+
+[[asserts]]
+arguments = [[[0, 2]], 0, 10, 2]
+expected  = 3
+
+[[asserts]]
+arguments = [[[0, 9]], 0, 10, 2]
+expected  = -1
+
+[[asserts]]
+arguments = [[[1, 2], [5, 6]], 0, 10, 2]
+expected  = 3
+
+[[asserts]]
+arguments = [[[1, 5], [2, 3]], 0, 10, 2]
+expected  = 6
+
+[[asserts]]
+arguments = [[[3, 4], [0, 1]], 0, 5, 2]
+expected  = -1
+
+[[asserts]]
+arguments = [[[4, 4]], 4, 8, 1]
+expected  = 5
+
+[[asserts]]
+arguments = [[[4, 4]], 4, 8, 2]
+expected  = 5
+
+[[asserts]]
+arguments = [[[2, 2], [4, 4], [6, 6]], 0, 6, 1]
+expected  = 0
+
+[[asserts]]
+arguments = [[[0, 0], [2, 2], [4, 4]], 0, 4, 1]
+expected  = 1
+
+[[asserts]]
+arguments = [[[0, 1], [2, 3], [4, 5]], 0, 5, 1]
+expected  = -1
