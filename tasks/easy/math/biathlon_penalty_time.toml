@@ -1,0 +1,127 @@
+level             = "easy"
+name              = "biathlon_penalty_time"
+tags              = ["math", "winter_olympics"]
+time_to_solve_sec = 220
+
+description_en = """
+In biathlon, each miss adds a fixed penalty.
+Given `base_time_sec`, `misses`, and `penalty_per_miss_sec`, return final time.
+If `misses == 0`, apply a clean-shooting bonus: subtract `10` seconds, but final time cannot go below `0`.
+"""
+
+description_ru = """
+В биатлоне каждый промах добавляет фиксированный штраф.
+Даны `base_time_sec`, `misses`, `penalty_per_miss_sec`.
+Верните итоговое время.
+Если `misses == 0`, применяется бонус за чистую стрельбу: вычтите `10` секунд, но итог не может быть меньше `0`.
+"""
+
+solution = """
+def solution(base_time_sec: int, misses: int, penalty_per_miss_sec: int) -> int:
+    t = base_time_sec + misses * penalty_per_miss_sec - (10 if misses == 0 else 0)
+    return max(0, t)
+"""
+
+examples = """
+solution(0, 0, 30) == 0
+solution(1200, 1, 30) == 1230
+solution(1300, 0, 45) == 1290
+"""
+
+[[input_signature]]
+argument_name = "base_time_sec"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "misses"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "penalty_per_miss_sec"
+[input_signature.type]
+name = "integer"
+
+[output_signature.type]
+name = "integer"
+
+[[asserts]]
+arguments = [0, 0, 30]
+expected  = 0
+
+[[asserts]]
+arguments = [1200, 1, 30]
+expected  = 1230
+
+[[asserts]]
+arguments = [1500, 3, 25]
+expected  = 1575
+
+[[asserts]]
+arguments = [1300, 0, 45]
+expected  = 1290
+
+[[asserts]]
+arguments = [999, 5, 10]
+expected  = 1049
+
+[[asserts]]
+arguments = [2000, 2, 50]
+expected  = 2100
+
+[[asserts]]
+arguments = [1800, 4, 20]
+expected  = 1880
+
+[[asserts]]
+arguments = [3600, 1, 60]
+expected  = 3660
+
+[[asserts]]
+arguments = [800, 7, 15]
+expected  = 905
+
+[[asserts]]
+arguments = [1400, 2, 30]
+expected  = 1460
+
+[[asserts]]
+arguments = [1, 1, 1]
+expected  = 2
+
+[[asserts]]
+arguments = [2500, 10, 60]
+expected  = 3100
+
+[[asserts]]
+arguments = [9999, 0, 99]
+expected  = 9989
+
+[[asserts]]
+arguments = [1234, 9, 7]
+expected  = 1297
+
+[[asserts]]
+arguments = [50, 5, 50]
+expected  = 300
+
+[[asserts]]
+arguments = [75, 2, 100]
+expected  = 275
+
+[[asserts]]
+arguments = [360, 8, 45]
+expected  = 720
+
+[[asserts]]
+arguments = [1, 0, 1000]
+expected  = 0
+
+[[asserts]]
+arguments = [4200, 3, 120]
+expected  = 4560
+
+[[asserts]]
+arguments = [777, 7, 7]
+expected  = 826

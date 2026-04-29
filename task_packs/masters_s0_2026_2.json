@@ -1,0 +1,17 @@
+{
+  "name": "masters_s0_2026_2",
+  "task_names": [
+    "figure_skating_total_points",
+    "ski_laps_count",
+    "speed_skating_time_to_seconds",
+    "cross_country_podium_indices",
+    "hockey_bet_outcome",
+    "alpine_slalom_best_run",
+    "biathlon_penalty_time",
+    "short_track_set_winner",
+    "skiathlon_points_table",
+    "speed_skating_heat_qualifiers",
+    "winter_medal_table_ranking",
+    "curling_match_score"
+  ]
+}

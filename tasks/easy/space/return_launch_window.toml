@@ -1,0 +1,115 @@
+level             = "easy"
+name              = "return_launch_window"
+tags              = ["space", "math", "simulation"]
+time_to_solve_sec = 280
+
+description_en = """
+To leave the Moon, the lander may lift off every `lander_period` minutes starting at `lander_start`, and the orbiter passes overhead every `orbiter_period` minutes starting at `orbiter_start`. Given the crew's `ready_time` and a mission `deadline`, return the earliest rendezvous time, or `-1` if none exists.
+"""
+
+description_ru = """
+Чтобы покинуть Луну, посадочный модуль может взлетать каждые `lander_period` минут, начиная с `lander_start`, а орбитальный модуль проходит над базой каждые `orbiter_period` минут, начиная с `orbiter_start`. По времени готовности экипажа `ready_time` и миссионному дедлайну `deadline` верните самый ранний момент стыковки или `-1`, если его нет.
+"""
+
+limits = """
+- $0 \\leq \\text{ready\\_time} \\leq \\text{deadline} \\leq 10^6$
+- $0 \\leq \\text{lander\\_start}, \\text{orbiter\\_start} \\leq 10^6$
+- $1 \\leq \\text{lander\\_period}, \\text{orbiter\\_period} \\leq 10^5$
+"""
+
+solution = """
+def solution(ready_time: int, lander_start: int, lander_period: int, orbiter_start: int, orbiter_period: int, deadline: int) -> int:
+    t = max(ready_time, lander_start)
+    t += (lander_period - (t - lander_start) % lander_period) % lander_period
+    while t <= deadline:
+        if t >= orbiter_start and (t - orbiter_start) % orbiter_period == 0: return t
+        t += lander_period
+    return -1
+"""
+
+examples = """
+solution(0, 0, 5, 0, 3, 20) == 0
+solution(1, 0, 5, 0, 3, 20) == 15
+solution(7, 2, 4, 1, 6, 30) == -1
+"""
+
+[[input_signature]]
+argument_name = "ready_time"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "lander_start"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "lander_period"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "orbiter_start"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "orbiter_period"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "deadline"
+[input_signature.type]
+name = "integer"
+
+[output_signature.type]
+name = "integer"
+
+[[asserts]]
+arguments = [0, 0, 5, 0, 3, 20]
+expected  = 0
+
+[[asserts]]
+arguments = [1, 0, 5, 0, 3, 20]
+expected  = 15
+
+[[asserts]]
+arguments = [7, 2, 4, 1, 6, 30]
+expected  = -1
+
+[[asserts]]
+arguments = [7, 2, 4, 2, 6, 30]
+expected  = 14
+
+[[asserts]]
+arguments = [12, 10, 7, 3, 9, 40]
+expected  = -1
+
+[[asserts]]
+arguments = [12, 10, 7, 3, 7, 40]
+expected  = 17
+
+[[asserts]]
+arguments = [50, 0, 10, 5, 15, 100]
+expected  = 50
+
+[[asserts]]
+arguments = [51, 0, 10, 5, 15, 100]
+expected  = 80
+
+[[asserts]]
+arguments = [5, 5, 1, 10, 2, 20]
+expected  = 10
+
+[[asserts]]
+arguments = [5, 0, 6, 4, 8, 40]
+expected  = 12
+
+[[asserts]]
+arguments = [5, 0, 6, 5, 8, 35]
+expected  = -1
+
+[[asserts]]
+arguments = [100, 120, 10, 110, 15, 200]
+expected  = 140

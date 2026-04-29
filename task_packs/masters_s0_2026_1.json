@@ -1,0 +1,17 @@
+{
+  "name": "masters_s0_2026_1",
+  "task_names": [
+    "payload_mass_check",
+    "launch_window_day",
+    "space_suit_inventory",
+    "stage_fuel_left",
+    "trans_lunar_burn_plan",
+    "relay_signal_windows",
+    "space_debris_avoidance",
+    "lunar_orbit_capture",
+    "return_launch_window",
+    "lunar_base_power_grid",
+    "landing_zone_scan",
+    "earth_return_reentry"
+  ]
+}

@@ -1,0 +1,120 @@
+level             = "elementary"
+name              = "speed_skating_time_to_seconds"
+tags              = ["math", "winter_olympics"]
+time_to_solve_sec = 160
+
+description_en = """
+Given speed skating result as `minutes` and `seconds`, return total seconds.
+If time is non-zero, add a fixed `2`-second reaction delay.
+"""
+
+description_ru = """
+Дан результат в конькобежном спорте как `minutes` и `seconds`.
+Верните общее число секунд.
+Если время не нулевое, добавьте фиксированную задержку реакции `2` секунды.
+"""
+
+solution = """
+def solution(minutes: int, seconds: int) -> int:
+    t = minutes * 60 + seconds
+    return 0 if t == 0 else t + 2
+"""
+
+examples = """
+solution(0, 0) == 0
+solution(1, 5) == 67
+solution(2, 40) == 162
+"""
+
+[[input_signature]]
+argument_name = "minutes"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "seconds"
+[input_signature.type]
+name = "integer"
+
+[output_signature.type]
+name = "integer"
+
+[[asserts]]
+arguments = [0, 0]
+expected  = 0
+
+[[asserts]]
+arguments = [0, 59]
+expected  = 61
+
+[[asserts]]
+arguments = [1, 0]
+expected  = 62
+
+[[asserts]]
+arguments = [1, 5]
+expected  = 67
+
+[[asserts]]
+arguments = [2, 40]
+expected  = 162
+
+[[asserts]]
+arguments = [3, 12]
+expected  = 194
+
+[[asserts]]
+arguments = [5, 30]
+expected  = 332
+
+[[asserts]]
+arguments = [7, 45]
+expected  = 467
+
+[[asserts]]
+arguments = [10, 1]
+expected  = 603
+
+[[asserts]]
+arguments = [12, 59]
+expected  = 781
+
+[[asserts]]
+arguments = [59, 59]
+expected  = 3601
+
+[[asserts]]
+arguments = [20, 0]
+expected  = 1202
+
+[[asserts]]
+arguments = [20, 30]
+expected  = 1232
+
+[[asserts]]
+arguments = [2, 2]
+expected  = 124
+
+[[asserts]]
+arguments = [9, 9]
+expected  = 551
+
+[[asserts]]
+arguments = [15, 45]
+expected  = 947
+
+[[asserts]]
+arguments = [30, 30]
+expected  = 1832
+
+[[asserts]]
+arguments = [100, 0]
+expected  = 6002
+
+[[asserts]]
+arguments = [100, 59]
+expected  = 6061
+
+[[asserts]]
+arguments = [42, 42]
+expected  = 2564

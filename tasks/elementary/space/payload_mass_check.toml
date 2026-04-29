@@ -1,0 +1,92 @@
+level             = "elementary"
+name              = "payload_mass_check"
+tags              = ["space", "math"]
+time_to_solve_sec = 120
+
+description_en = """
+Mission Selene begins on Earth. Given the masses of all cargo containers and the rocket's payload limit, determine whether the crew can launch without exceeding the limit.
+"""
+
+description_ru = """
+Миссия Selene начинается на Земле. По массам всех грузовых контейнеров и лимиту полезной нагрузки ракеты определите, можно ли стартовать без превышения лимита.
+"""
+
+limits = """
+- $0 \\leq \\text{len}(\\text{cargo\\_masses}) \\leq 100$
+- $0 \\leq \\text{cargo\\_masses}[i] \\leq 10^4$
+- $0 \\leq \\text{limit} \\leq 10^6$
+"""
+
+solution = """
+def solution(cargo_masses: list[int], limit: int) -> bool:
+    return sum(cargo_masses) <= limit
+"""
+
+examples = """
+solution([], 0) == True
+solution([5], 4) == False
+solution([1, 2, 3], 6) == True
+"""
+
+[[input_signature]]
+argument_name = "cargo_masses"
+[input_signature.type]
+name = "array"
+[input_signature.type.nested]
+name = "integer"
+
+[[input_signature]]
+argument_name = "limit"
+[input_signature.type]
+name = "integer"
+
+[output_signature.type]
+name = "boolean"
+
+[[asserts]]
+arguments = [[], 0]
+expected  = true
+
+[[asserts]]
+arguments = [[5], 4]
+expected  = false
+
+[[asserts]]
+arguments = [[5], 5]
+expected  = true
+
+[[asserts]]
+arguments = [[1, 2, 3], 6]
+expected  = true
+
+[[asserts]]
+arguments = [[1, 2, 3], 5]
+expected  = false
+
+[[asserts]]
+arguments = [[10, 0, 5], 15]
+expected  = true
+
+[[asserts]]
+arguments = [[10, 0, 5], 14]
+expected  = false
+
+[[asserts]]
+arguments = [[7, 7, 7], 21]
+expected  = true
+
+[[asserts]]
+arguments = [[7, 7, 7], 20]
+expected  = false
+
+[[asserts]]
+arguments = [[100, 200, 300], 1000]
+expected  = true
+
+[[asserts]]
+arguments = [[100, 200, 300], 599]
+expected  = false
+
+[[asserts]]
+arguments = [[9, 1, 0, 0], 10]
+expected  = true

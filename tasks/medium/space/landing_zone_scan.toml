@@ -1,0 +1,107 @@
+level             = "medium"
+name              = "landing_zone_scan"
+tags              = ["space", "matrices"]
+time_to_solve_sec = 420
+
+description_en = """
+A lunar height map is given as integers, where `-1` marks a crater that cannot be used. Among all valid `2 x 2` landing zones, choose the one with the smallest roughness `max - min`. Break ties by smaller Manhattan distance from the zone's top-left corner to `(target_row, target_col)`, then by smaller row and column. Return `[row, col]`, or `[-1, -1]` if no zone is valid.
+"""
+
+description_ru = """
+Карта высот Луны задана целыми числами, где `-1` обозначает кратер, непригодный для посадки. Среди всех корректных зон посадки `2 x 2` выберите ту, у которой минимальна шероховатость `max - min`. При равенстве выбирайте меньшую манхэттенскую дистанцию от левого верхнего угла зоны до `(target_row, target_col)`, затем меньшие строку и столбец. Верните `[row, col]` или `[-1, -1]`, если подходящей зоны нет.
+"""
+
+limits = """
+- $2 \\leq \\text{rows}, \\text{cols} \\leq 30$
+- $\\text{field}[i][j] \\in \\{-1\\} \\cup [0, 10^4]$
+"""
+
+solution = """
+def solution(field: list[list[int]], target_row: int, target_col: int) -> list[int]:
+    best = None
+    for i in range(len(field) - 1):
+        for j in range(len(field[0]) - 1):
+            x = [field[i][j], field[i + 1][j], field[i][j + 1], field[i + 1][j + 1]]
+            if min(x) >= 0:
+                cur = (max(x) - min(x), abs(i - target_row) + abs(j - target_col), i, j)
+                best = cur if best is None or cur < best else best
+    return [-1, -1] if best is None else [best[2], best[3]]
+"""
+
+examples = """
+solution([[1, 1], [1, 1]], 0, 0) == [0, 0]
+solution([[1, -1], [1, 1]], 0, 0) == [-1, -1]
+solution([[0, 0, 9], [0, 0, 9], [9, 9, 9]], 0, 0) == [0, 0]
+"""
+
+[[input_signature]]
+argument_name = "field"
+[input_signature.type]
+name = "array"
+[input_signature.type.nested]
+name = "array"
+[input_signature.type.nested.nested]
+name = "integer"
+
+[[input_signature]]
+argument_name = "target_row"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "target_col"
+[input_signature.type]
+name = "integer"
+
+[output_signature.type]
+name = "array"
+[output_signature.type.nested]
+name = "integer"
+
+[[asserts]]
+arguments = [[[1, 1], [1, 1]], 0, 0]
+expected  = [0, 0]
+
+[[asserts]]
+arguments = [[[1, -1], [1, 1]], 0, 0]
+expected  = [-1, -1]
+
+[[asserts]]
+arguments = [[[1, 2, 3], [1, 2, 3], [1, 2, 3]], 1, 1]
+expected  = [1, 1]
+
+[[asserts]]
+arguments = [[[5, 5, 5], [5, 6, 5], [5, 5, 5]], 0, 0]
+expected  = [0, 0]
+
+[[asserts]]
+arguments = [[[0, 0, 9], [0, 0, 9], [9, 9, 9]], 0, 0]
+expected  = [0, 0]
+
+[[asserts]]
+arguments = [[[3, 4, 5], [3, -1, 5], [3, 4, 5]], 1, 1]
+expected  = [-1, -1]
+
+[[asserts]]
+arguments = [[[1, 2, 1], [2, 1, 2], [1, 2, 1]], 0, 1]
+expected  = [0, 1]
+
+[[asserts]]
+arguments = [[[7, 7, 7, 7], [7, 8, 8, 7], [7, 8, 8, 7]], 1, 2]
+expected  = [1, 1]
+
+[[asserts]]
+arguments = [[[2, 2, 2], [2, 2, 2], [2, 2, 2]], 5, 5]
+expected  = [1, 1]
+
+[[asserts]]
+arguments = [[[4, 6, 4], [6, 4, 6], [4, 6, 4]], 1, 0]
+expected  = [1, 0]
+
+[[asserts]]
+arguments = [[[1, 1, 2, 2], [1, 1, 2, 2], [5, 5, 5, 5]], 1, 1]
+expected  = [0, 0]
+
+[[asserts]]
+arguments = [[[9, 8, 7], [6, 5, 4], [3, 2, 1]], 1, 1]
+expected  = [1, 1]

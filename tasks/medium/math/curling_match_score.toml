@@ -1,0 +1,152 @@
+level             = "medium"
+name              = "curling_match_score"
+tags              = ["math", "winter_olympics"]
+time_to_solve_sec = 420
+
+description_en = """
+You are given per-end stone distances to the button for two curling teams:
+- `a_ends[i]` for team A in end `i`
+- `b_ends[i]` for team B in end `i`
+
+Smaller distance is better.
+Only one team can score in an end:
+- if one side has no stones, the other side scores all its stones in that end
+- otherwise, the side with the single best stone scores points equal to the number of its stones that are closer than opponent's best stone
+- if best stones are equal, nobody scores
+
+Return total match score as `[a_total, b_total]`.
+If the number of ends differs, use only common prefix ends.
+"""
+
+description_ru = """
+Даны расстояния камней до кнопки по эндам для двух команд по кёрлингу:
+- `a_ends[i]` для команды A в энде `i`
+- `b_ends[i]` для команды B в энде `i`
+
+Меньшее расстояние лучше.
+В одном энде очки получает только одна команда:
+- если у одной стороны нет камней, другая получает очки за все свои камни в этом энде
+- иначе очки получает сторона с лучшим (самым близким) камнем, и число очков равно количеству ее камней, которые ближе, чем лучший камень соперника
+- если лучшие камни равны, очки никто не получает
+
+Верните итог матча как `[a_total, b_total]`.
+Если число эндов различается, используйте только общую префиксную часть.
+"""
+
+solution = """
+def solution(a_ends: list[list[int]], b_ends: list[list[int]]) -> list[int]:
+    a = b = 0
+    for x, y in zip(a_ends, b_ends):
+        if not x or not y: a += len(x) if x else 0; b += len(y) if y else 0
+        else: ax, by = min(x), min(y); a += sum(v < by for v in x) if ax < by else 0; b += sum(v < ax for v in y) if by < ax else 0
+    return [a, b]
+"""
+
+examples = """
+solution([], []) == [0, 0]
+solution([[12]], [[15]]) == [1, 0]
+solution([[9, 12, 15]], [[11, 13]]) == [1, 0]
+"""
+
+[[input_signature]]
+argument_name = "a_ends"
+[input_signature.type]
+name = "array"
+[input_signature.type.nested]
+name = "array"
+[input_signature.type.nested.nested]
+name = "integer"
+
+[[input_signature]]
+argument_name = "b_ends"
+[input_signature.type]
+name = "array"
+[input_signature.type.nested]
+name = "array"
+[input_signature.type.nested.nested]
+name = "integer"
+
+[output_signature.type]
+name = "array"
+[output_signature.type.nested]
+name = "integer"
+
+[[asserts]]
+arguments = [[], []]
+expected  = [0, 0]
+
+[[asserts]]
+arguments = [[[]], [[]]]
+expected  = [0, 0]
+
+[[asserts]]
+arguments = [[[12]], [[15]]]
+expected  = [1, 0]
+
+[[asserts]]
+arguments = [[[20]], [[10]]]
+expected  = [0, 1]
+
+[[asserts]]
+arguments = [[[9, 12, 15]], [[11, 13]]]
+expected  = [1, 0]
+
+[[asserts]]
+arguments = [[[14, 16]], [[10, 12, 18]]]
+expected  = [0, 2]
+
+[[asserts]]
+arguments = [[[8, 9, 10]], [[8, 11, 12]]]
+expected  = [0, 0]
+
+[[asserts]]
+arguments = [[[1, 2, 3]], [[]]]
+expected  = [3, 0]
+
+[[asserts]]
+arguments = [[[]], [[4, 5]]]
+expected  = [0, 2]
+
+[[asserts]]
+arguments = [[[5], [7]], [[6], [8]]]
+expected  = [2, 0]
+
+[[asserts]]
+arguments = [[[10, 11], [3, 4, 5]], [[9, 12], [6, 7]]]
+expected  = [3, 1]
+
+[[asserts]]
+arguments = [[[30, 40], [10]], [[20, 50], [5]]]
+expected  = [0, 2]
+
+[[asserts]]
+arguments = [[[2, 4, 6], [1, 3]], [[5, 7], [2, 8]]]
+expected  = [3, 0]
+
+[[asserts]]
+arguments = [[[2, 8], [9, 10]], [[1, 7], [11, 12]]]
+expected  = [2, 1]
+
+[[asserts]]
+arguments = [[[3, 3, 3]], [[4, 5, 6]]]
+expected  = [3, 0]
+
+[[asserts]]
+arguments = [[[4, 5, 6]], [[3, 3, 3]]]
+expected  = [0, 3]
+
+[[asserts]]
+arguments = [[[1], [2], [3]], [[4], [1], [5]]]
+expected  = [2, 1]
+
+[[asserts]]
+arguments = [[[5, 6], []], [[], [7, 8, 9]]]
+expected  = [2, 3]
+
+[[asserts]]
+arguments = [[[100, 101, 102]], [[99, 103]]]
+expected  = [0, 1]
+
+[[asserts]]
+arguments = [[[6, 7, 8], [1, 9, 10]], [[5, 11], [2, 3, 4]]]
+expected  = [1, 1]

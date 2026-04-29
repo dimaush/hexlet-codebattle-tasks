@@ -1,0 +1,138 @@
+level             = "easy"
+name              = "hockey_bet_outcome"
+tags              = ["collections", "winter_olympics"]
+time_to_solve_sec = 250
+
+description_en = """
+A hockey bet contains predicted score (`pred_a`, `pred_b`) and final score (`real_a`, `real_b`).
+Return:
+- `"Score"` if exact score is guessed
+- `"Result"` if exact score is not guessed, but match outcome is guessed (A win, B win, or draw)
+- `"Miss"` otherwise
+"""
+
+description_ru = """
+Ставка на хоккей содержит прогноз счета (`pred_a`, `pred_b`) и реальный счет (`real_a`, `real_b`).
+Верните:
+- `"Score"`, если точно угадан счет
+- `"Result"`, если счет не угадан, но угадан исход (победа A, победа B или ничья)
+- `"Miss"` в остальных случаях
+"""
+
+solution = """
+def solution(pred_a: int, pred_b: int, real_a: int, real_b: int) -> str:
+    if pred_a == real_a and pred_b == real_b:
+        return "Score"
+    p = (pred_a > pred_b) - (pred_a < pred_b)
+    r = (real_a > real_b) - (real_a < real_b)
+    return "Result" if p == r else "Miss"
+"""
+
+examples = """
+solution(3, 2, 3, 2) == "Score"
+solution(2, 1, 4, 3) == "Result"
+solution(1, 1, 0, 2) == "Miss"
+"""
+
+[[input_signature]]
+argument_name = "pred_a"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "pred_b"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "real_a"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "real_b"
+[input_signature.type]
+name = "integer"
+
+[output_signature.type]
+name = "string"
+
+[[asserts]]
+arguments = [0, 0, 0, 0]
+expected  = "Score"
+
+[[asserts]]
+arguments = [3, 2, 3, 2]
+expected  = "Score"
+
+[[asserts]]
+arguments = [2, 1, 4, 3]
+expected  = "Result"
+
+[[asserts]]
+arguments = [1, 2, 3, 4]
+expected  = "Result"
+
+[[asserts]]
+arguments = [2, 2, 1, 1]
+expected  = "Result"
+
+[[asserts]]
+arguments = [1, 1, 0, 2]
+expected  = "Miss"
+
+[[asserts]]
+arguments = [3, 0, 2, 2]
+expected  = "Miss"
+
+[[asserts]]
+arguments = [0, 4, 5, 1]
+expected  = "Miss"
+
+[[asserts]]
+arguments = [5, 4, 1, 0]
+expected  = "Result"
+
+[[asserts]]
+arguments = [4, 5, 0, 1]
+expected  = "Result"
+
+[[asserts]]
+arguments = [6, 6, 6, 6]
+expected  = "Score"
+
+[[asserts]]
+arguments = [7, 7, 4, 4]
+expected  = "Result"
+
+[[asserts]]
+arguments = [8, 2, 8, 3]
+expected  = "Result"
+
+[[asserts]]
+arguments = [2, 8, 3, 8]
+expected  = "Result"
+
+[[asserts]]
+arguments = [10, 1, 1, 10]
+expected  = "Miss"
+
+[[asserts]]
+arguments = [1, 10, 10, 1]
+expected  = "Miss"
+
+[[asserts]]
+arguments = [9, 0, 9, 0]
+expected  = "Score"
+
+[[asserts]]
+arguments = [0, 9, 0, 9]
+expected  = "Score"
+
+[[asserts]]
+arguments = [4, 4, 3, 2]
+expected  = "Miss"
+
+[[asserts]]
+arguments = [3, 2, 4, 4]
+expected  = "Miss"

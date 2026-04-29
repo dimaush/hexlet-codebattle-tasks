@@ -1,0 +1,93 @@
+level             = "easy"
+name              = "relay_signal_windows"
+tags              = ["space", "intervals"]
+time_to_solve_sec = 250
+
+description_en = """
+On the way to the Moon, several relays provide communication windows `[l, r]`, inclusive. After merging overlapping or touching windows, return the length of the longest continuous contact period.
+"""
+
+description_ru = """
+На пути к Луне несколько ретрансляторов дают окна связи `[l, r]` с включенными границами. После объединения пересекающихся или соприкасающихся окон верните длину самого длинного непрерывного периода связи.
+"""
+
+limits = """
+- $0 \\leq \\text{len}(\\text{windows}) \\leq 100$
+- $0 \\leq l \\leq r \\leq 10^6$
+"""
+
+solution = """
+def solution(windows: list[list[int]]) -> int:
+    if not windows: return 0
+    l, r = (w := sorted(windows))[0]
+    best = 0
+    for a, b in w[1:]:
+        best, l, r = (best, l, max(r, b)) if a <= r + 1 else (max(best, r - l + 1), a, b)
+    return max(best, r - l + 1)
+"""
+
+examples = """
+solution([]) == 0
+solution([[1, 3]]) == 3
+solution([[1, 2], [3, 5]]) == 5
+"""
+
+[[input_signature]]
+argument_name = "windows"
+[input_signature.type]
+name = "array"
+[input_signature.type.nested]
+name = "array"
+[input_signature.type.nested.nested]
+name = "integer"
+
+[output_signature.type]
+name = "integer"
+
+[[asserts]]
+arguments = [[]]
+expected  = 0
+
+[[asserts]]
+arguments = [[[1, 1]]]
+expected  = 1
+
+[[asserts]]
+arguments = [[[1, 3]]]
+expected  = 3
+
+[[asserts]]
+arguments = [[[1, 3], [2, 5]]]
+expected  = 5
+
+[[asserts]]
+arguments = [[[1, 2], [4, 5]]]
+expected  = 2
+
+[[asserts]]
+arguments = [[[1, 2], [3, 5]]]
+expected  = 5
+
+[[asserts]]
+arguments = [[[5, 7], [1, 3]]]
+expected  = 3
+
+[[asserts]]
+arguments = [[[1, 10], [2, 3], [4, 8]]]
+expected  = 10
+
+[[asserts]]
+arguments = [[[0, 0], [2, 2], [4, 4]]]
+expected  = 1
+
+[[asserts]]
+arguments = [[[0, 1], [2, 3], [4, 5]]]
+expected  = 6
+
+[[asserts]]
+arguments = [[[10, 12], [13, 15], [20, 25]]]
+expected  = 6
+
+[[asserts]]
+arguments = [[[5, 5], [6, 6], [7, 7], [8, 10]]]
+expected  = 6

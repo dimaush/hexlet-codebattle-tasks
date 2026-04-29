@@ -99,6 +99,27 @@ class TestRunner:
         if signature not in self.ALLOWED_SIGNATURES:
             raise ValueError(f"Invalid {signature_type}: {signature} is not in the allowed signatures list")
 
+    def _is_downcased_name(self, name: str) -> bool:
+        return name == name.lower()
+
+    def validate_downcased_variable_names(self, data: Dict[str, Any], display_name: str) -> None:
+        bad_names: set[str] = set()
+
+        input_sig = data.get("input_signature")
+        if isinstance(input_sig, list):
+            for sig in input_sig:
+                arg_name = sig.get("argument_name")
+                if isinstance(arg_name, str) and not self._is_downcased_name(arg_name):
+                    bad_names.add(arg_name)
+        elif isinstance(input_sig, dict):
+            arg_name = input_sig.get("argument_name")
+            if isinstance(arg_name, str) and not self._is_downcased_name(arg_name):
+                bad_names.add(arg_name)
+
+        if bad_names:
+            joined_names = ", ".join(sorted(bad_names))
+            raise ValueError(f"[{display_name}] input_signature argument_name values must be downcased. Found: {joined_names}")
+
     def signature_to_str(self, sig: Dict[str, Any]) -> str:
         t = sig.get("type", sig)
         name = t.get("name")
@@ -196,6 +217,7 @@ class TestRunner:
         # Pre-validate assert arguments/expected against signatures for early, clear errors
         try:
             display_name = toml_path if self.is_file else os.path.relpath(toml_path, self.toml_path)
+            self.validate_downcased_variable_names(data, display_name)
             self.check_assert_types(data, display_name)
         except Exception:
             raise
@@ -224,26 +246,9 @@ class TestRunner:
         except Exception as e:
             raise ValueError(f"Failed to create solution function: {str(e)}")
 
-    def normalize_output(self, value: Any) -> Any:
-        """Normalize output to handle case-sensitivity in dictionaries"""
-        if isinstance(value, dict):
-            return {k.lower(): self.normalize_output(v) for k, v in value.items()}
-        elif isinstance(value, list):
-            return [self.normalize_output(x) for x in value]
-        elif isinstance(value, str):
-            return value.lower()
-        return value
-
     def values_equal(self, actual: Any, expected: Any) -> bool:
-        """Compare values with normalization for case-insensitive comparison"""
-        if actual == expected:
-            return True
-
-        if isinstance(actual, str) and isinstance(expected, str):
-            if actual.isdigit() and expected.isdigit():
-                return actual == expected
-
-        return self.normalize_output(actual) == self.normalize_output(expected)
+        """Compare values using exact equality."""
+        return actual == expected
 
     def find_difference(self, actual: Any, expected: Any, path: str = "") -> List[str]:
         """Find and return detailed differences between actual and expected values"""

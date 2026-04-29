@@ -1,0 +1,116 @@
+level             = "hard"
+name              = "earth_return_reentry"
+tags              = ["space", "dp", "matrices"]
+time_to_solve_sec = 780
+
+description_en = """
+Selene returns to Earth through a layered reentry corridor. Each cell stores the heat cost of passing through that sector, and `-1` marks a storm sector that cannot be used. The capsule starts at row `0`, column `start_col`. On each step it moves to the next row in the same column, one column left, or one column right. A diagonal move uses `1` unit of steering fuel, a straight move uses `0`. Return the minimum total heat needed to reach any cell in the last row using at most `fuel` units, or `-1` if landing is impossible.
+"""
+
+description_ru = """
+Selene возвращается на Землю через многослойный коридор входа в атмосферу. Каждая клетка хранит тепловую стоимость прохождения сектора, а `-1` обозначает штормовой сектор, через который проходить нельзя. Капсула стартует в строке `0`, столбце `start_col`. На каждом шаге она переходит в следующую строку в том же столбце, на один столбец влево или на один столбец вправо. Диагональный ход тратит `1` единицу управляющего топлива, прямой ход — `0`. Верните минимальную суммарную тепловую стоимость достижения любой клетки последней строки при расходе не более `fuel` единиц, или `-1`, если посадка невозможна.
+"""
+
+limits = """
+- $1 \\leq \\text{rows}, \\text{cols} \\leq 50$
+- $0 \\leq \\text{fuel} \\leq 50$
+- $\\text{corridor}[i][j] \\in \\{-1\\} \\cup [0, 10^4]$
+"""
+
+solution = """
+def solution(corridor: list[list[int]], start_col: int, fuel: int) -> int:
+    if corridor[0][start_col] < 0:
+        return -1
+    inf = 10 ** 18
+    dp = [[inf] * len(corridor[0]) for _ in range(fuel + 1)]
+    dp[0][start_col] = corridor[0][start_col]
+    for row in corridor[1:]:
+        ndp = [[inf] * len(row) for _ in range(fuel + 1)]
+        for used in range(fuel + 1):
+            for c, cost in enumerate(dp[used]):
+                if cost == inf:
+                    continue
+                for dc in (-1, 0, 1):
+                    nc, nf = c + dc, used + (dc != 0)
+                    if 0 <= nc < len(row) and nf <= fuel and row[nc] >= 0:
+                        ndp[nf][nc] = min(ndp[nf][nc], cost + row[nc])
+        dp = ndp
+    ans = min(min(row) for row in dp)
+    return -1 if ans == inf else ans
+"""
+
+examples = """
+solution([[1], [2], [3]], 0, 0) == 6
+solution([[5, 1, 5], [1, 9, 1], [5, 1, 5]], 1, 2) == 3
+solution([[1, 1, 1], [9, -1, 9], [1, 1, 1]], 1, 0) == -1
+"""
+
+[[input_signature]]
+argument_name = "corridor"
+[input_signature.type]
+name = "array"
+[input_signature.type.nested]
+name = "array"
+[input_signature.type.nested.nested]
+name = "integer"
+
+[[input_signature]]
+argument_name = "start_col"
+[input_signature.type]
+name = "integer"
+
+[[input_signature]]
+argument_name = "fuel"
+[input_signature.type]
+name = "integer"
+
+[output_signature.type]
+name = "integer"
+
+[[asserts]]
+arguments = [[[1], [2], [3]], 0, 0]
+expected  = 6
+
+[[asserts]]
+arguments = [[[1, 2], [3, 4]], 0, 0]
+expected  = 4
+
+[[asserts]]
+arguments = [[[1, -1], [5, 1], [5, 1]], 0, 1]
+expected  = 3
+
+[[asserts]]
+arguments = [[[1, -1], [5, 1], [5, 1]], 0, 0]
+expected  = 11
+
+[[asserts]]
+arguments = [[[1, 1, 1], [9, -1, 9], [1, 1, 1]], 1, 0]
+expected  = -1
+
+[[asserts]]
+arguments = [[[1, 1, 1], [9, -1, 9], [1, 1, 1]], 1, 1]
+expected  = 11
+
+[[asserts]]
+arguments = [[[5, 1, 5], [1, 1, 1], [5, 1, 5]], 1, 1]
+expected  = 3
+
+[[asserts]]
+arguments = [[[5, 1, 5], [1, 9, 1], [5, 1, 5]], 1, 2]
+expected  = 3
+
+[[asserts]]
+arguments = [[[5, 1, 5], [1, 9, 1], [5, 1, 5]], 1, 1]
+expected  = 7
+
+[[asserts]]
+arguments = [[[1, 9, 1], [9, 1, 9], [1, 9, 1]], 0, 2]
+expected  = 3
+
+[[asserts]]
+arguments = [[[1, 9, 1], [9, 1, 9], [1, 9, 1]], 0, 1]
+expected  = 11
+
+[[asserts]]
+arguments = [[[1, 1, 1], [-1, -1, -1], [1, 1, 1]], 1, 2]
+expected  = -1

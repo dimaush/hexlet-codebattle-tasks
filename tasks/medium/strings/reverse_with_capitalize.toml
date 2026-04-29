@@ -26,9 +26,9 @@ def solution(sentence: str) -> str:
             word = word[:-1]
         if not word:
             return punct
-        was_cap = word[0].isupper()
-        reversed_word = word[::-1]
-        if was_cap:
+        had_upper = any(char.isupper() for char in word)
+        reversed_word = word[::-1].lower()
+        if had_upper:
             reversed_word = reversed_word[0].upper() + reversed_word[1:].lower()
         return reversed_word + punct
     return ' '.join(reverse_word(word) for word in sentence.split())
