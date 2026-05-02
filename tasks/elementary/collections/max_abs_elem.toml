@@ -4,11 +4,11 @@ tags              = ["collections"]
 time_to_solve_sec = 150
 
 description_en = """
-Find the maximum absolute value of an array.
+Find the number in array with the maximum absolute value. If there are several of such numbers, return the largest one.
 """
 
 description_ru = """
-Найдите максимальное по модулю число в массиве.
+Найдите максимальное по модулю число в массиве. Если их несколько, верните наибольшее.
 """
 
 limits = """
